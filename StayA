@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAYa — Rancang Kopi Fokusmu | Co-Working Cafe Kedap Suara</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            50: '#FDFBF9',
+                            100: '#F7F4EF',
+                            200: '#EDE6DC',
+                            300: '#DFD3C3'
+                        },
+                        espresso: {
+                            700: '#4E3524',
+                            800: '#3A2618',
+                            900: '#23160D',
+                            950: '#1F1B18'
+                        },
+                        caramel: {
+                            400: '#DDA15E',
+                            500: '#C88A4B',
+                            600: '#B07235'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F7F4EF;
+            color: #1F1B18;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F7F4EF;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C88A4B;
+            border-radius: 9999px;
+        }
+        /* Soundwave Animation */
+        @keyframes soundwave {
+            0%, 100% { transform: scaleY(0.3); }
+            50% { transform: scaleY(1); }
+        }
+        .wave-bar {
+            animation: soundwave 1.2s ease-in-out infinite;
+        }
+        .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.45s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.6s; }
+        
+        /* Subtle Floating Animation */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-caramel-500 selection:text-white overflow-x-hidden">
+
+    <!-- Toast Notification Container (No alert() used) -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+    <!-- Top Promo Banner -->
+    <div class="bg-espresso-900 text-cream-100 text-xs sm:text-sm py-2.5 px-4 text-center font-medium border-b border-espresso-700">
+        <span class="inline-flex items-center gap-1.5">
+            <span class="px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider bg-caramel-500 text-white rounded-full">Promo Kampus</span>
+            Diskon 15% khusus Mahasiswa Politeknik Astra & Pengurus HIMMA untuk reservasi Ruang Fokus!
+            <a href="#reservasi" class="underline hover:text-caramel-400 font-semibold ml-1">Klaim Sekarang &rarr;</a>
+        </span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-cream-100/90 backdrop-blur-md border-b border-cream-300/70 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-espresso-800 text-cream-100 flex items-center justify-center font-bold text-xl shadow-md group-hover:bg-caramel-500 transition-colors">
+                    S
+                </div>
+                <div>
+                    <span class="text-2xl font-extrabold tracking-tight text-espresso-900 block leading-none">STAYa</span>
+                    <span class="text-xs text-espresso-700 font-medium tracking-wide">Rancang Kopi Fokusmu</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-espresso-800">
+                <a href="#masalah-solusi" class="hover:text-caramel-600 transition-colors">Mengapa STAYa?</a>
+                <a href="#fitur" class="hover:text-caramel-600 transition-colors">Fasilitas & Manfaat</a>
+                <a href="#simulator" class="hover:text-caramel-600 transition-colors flex items-center gap-1.5">
+                    <span>STAYa Your Signature</span>
+                    <span class="px-2 py-0.5 text-[10px] bg-caramel-500/20 text-caramel-600 rounded-full font-bold">Demo App</span>
+                </a>
+                <a href="#reservasi" class="hover:text-caramel-600 transition-colors">Reservasi Ruang</a>
+                <a href="#kontak" class="hover:text-caramel-600 transition-colors">Lokasi & FAQ</a>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="hidden sm:flex items-center gap-3">
+                <a href="#simulator" class="px-4 py-2.5 rounded-xl text-sm font-bold text-espresso-800 bg-cream-200 hover:bg-cream-300 transition-all flex items-center gap-2">
+                    <i data-lucide="qr-code" class="w-4 h-4 text-caramel-600"></i>
+                    <span>Menu QR</span>
+                </a>
+                <a href="#reservasi" class="px-5 py-2.5 rounded-xl text-sm font-bold text-cream-50 bg-espresso-800 hover:bg-espresso-900 shadow-sm hover:shadow transition-all flex items-center gap-2">
+                    <i data-lucide="calendar-check" class="w-4 h-4 text-caramel-400"></i>
+                    <span>Booking Fokus</span>
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobileMenuBtn" class="md:hidden p-2.5 rounded-xl bg-cream-200 text-espresso-800 hover:bg-cream-300" aria-label="Buka Menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-cream-50 border-b border-cream-300 px-4 pt-3 pb-6 space-y-3">
+            <a href="#masalah-solusi" class="block py-2 px-3 rounded-lg font-semibold text-espresso-800 hover:bg-cream-200">Mengapa STAYa?</a>
+            <a href="#fitur" class="block py-2 px-3 rounded-lg font-semibold text-espresso-800 hover:bg-cream-200">Fasilitas & Manfaat</a>
+            <a href="#simulator" class="block py-2 px-3 rounded-lg font-semibold text-espresso-800 hover:bg-cream-200">Simulator Racik Kopi (Demo)</a>
+            <a href="#reservasi" class="block py-2 px-3 rounded-lg font-semibold text-espresso-800 hover:bg-cream-200">Reservasi Ruang Fokus</a>
+            <a href="#kontak" class="block py-2 px-3 rounded-lg font-semibold text-espresso-800 hover:bg-cream-200">Lokasi & Kontak</a>
+            <div class="pt-2 flex flex-col gap-2">
+                <a href="#simulator" class="w-full py-3 rounded-xl text-center font-bold bg-caramel-500 text-white">Racik Kopi Sekarang</a>
+                <a href="#reservasi" class="w-full py-3 rounded-xl text-center font-bold bg-espresso-800 text-cream-50">Reservasi Ruang Kedap Suara</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. HERO SECTION & UNIQUE VALUE PROPOSITION (UVP) -->
+    <section class="relative pt-10 pb-20 lg:pt-16 lg:pb-24 overflow-hidden">
+        <!-- Decorative Background Blur -->
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-caramel-400/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 -left-24 w-80 h-80 bg-espresso-700/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Column: UVP & Copywriting -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- Badge UVP -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-espresso-800/10 border border-espresso-800/20 text-espresso-800 text-xs sm:text-sm font-bold">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span>
+                        <span>Co-Working Coffee Space Pertama di Cikarang Selatan</span>
+                    </div>
+
+                    <!-- Main UVP Headline -->
+                    <h1 class="text-3xl sm:text-5xl lg:text-[52px] font-extrabold text-espresso-950 tracking-tight leading-[1.15]">
+                        Ruang Kedap Suara Khusus Kerja, <span class="font-serif italic font-semibold text-caramel-600">Dipadu</span> Sistem Racik Kopi Personal via Menu QR.
+                    </h1>
+
+                    <!-- Sub-headline -->
+                    <p class="text-base sm:text-lg text-espresso-700 leading-relaxed max-w-2xl">
+                        Ucapkan selamat tinggal pada kafe bising, kursi yang membuat pegal, dan antrean panjang. <strong>STAYa</strong> menghadirkan zona fokus tenang berfasilitas lengkap serta kebebasan meracik kopi khas sesuai selera dan anggaran mahasiswa.
+                    </p>
+
+                    <!-- Primary CTAs -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+                        <a href="#simulator" class="px-7 py-4 rounded-2xl bg-espresso-800 hover:bg-espresso-900 text-cream-50 font-bold text-base shadow-lg shadow-espresso-900/15 hover:shadow-xl transition-all flex items-center justify-center gap-3 group">
+                            <i data-lucide="Sliders" class="w-5 h-5 text-caramel-400"></i>
+                            <span>Racik Kopi Sekarang (Demo)</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#reservasi" class="px-7 py-4 rounded-2xl bg-cream-50 hover:bg-cream-200 text-espresso-900 border-2 border-espresso-800/20 font-bold text-base transition-all flex items-center justify-center gap-2.5">
+                            <i data-lucide="headphones" class="w-5 h-5 text-caramel-600"></i>
+                            <span>Reservasi Ruang Fokus</span>
+                        </a>
+                    </div>
+
+                    <!-- Live Status Outlet Widget (Addressing Prototype Feedback: Real-time crowd & plug info) -->
+                    <div class="pt-4">
+                        <div class="bg-cream-50 border border-cream-300 rounded-2xl p-4 sm:p-5 shadow-sm">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="relative flex h-3 w-3">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                                    </span>
+                                    <span class="text-xs font-extrabold uppercase tracking-wider text-espresso-800">Live Status Outlet STAYa — Politeknik Astra</span>
+                                </div>
+                                <button id="refreshStatusBtn" onclick="refreshOutletStatus()" class="text-xs font-semibold text-caramel-600 hover:text-espresso-900 flex items-center gap-1 transition-colors">
+                                    <i data-lucide="refresh-cw" id="refreshIcon" class="w-3.5 h-3.5"></i>
+                                    <span>Perbarui</span>
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <!-- Crowd Status -->
+                                <div class="bg-cream-100 p-3 rounded-xl border border-cream-200 flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-emerald-500/15 text-emerald-700 flex items-center justify-center shrink-0">
+                                        <i data-lucide="volume-1" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] font-semibold text-espresso-700">Tingkat Keramaian</p>
+                                        <p id="liveCrowdText" class="text-sm font-extrabold text-espresso-950">Tenang (35% Terisi)</p>
+                                    </div>
+                                </div>
+                                <!-- Focus Pod Status -->
+                                <div class="bg-cream-100 p-3 rounded-xl border border-cream-200 flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-caramel-500/15 text-caramel-600 flex items-center justify-center shrink-0">
+                                        <i data-lucide="armchair" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] font-semibold text-espresso-700">Zona Kedap Suara</p>
+                                        <p id="liveSeatText" class="text-sm font-extrabold text-espresso-950">14 / 20 Kursi Kosong</p>
+                                    </div>
+                                </div>
+                                <!-- Wi-Fi & Plug Status -->
+                                <div class="bg-cream-100 p-3 rounded-xl border border-cream-200 flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-blue-500/15 text-blue-700 flex items-center justify-center shrink-0">
+                                        <i data-lucide="wifi" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] font-semibold text-espresso-700">Wi-Fi & Stopkontak</p>
+                                        <p id="liveWifiText" class="text-sm font-extrabold text-espresso-950">150 Mbps • 100% Meja</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Visual Showcase Card -->
+                <div class="lg:col-span-5">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <!-- Main Visual Card -->
+                        <div class="bg-espresso-900 rounded-3xl p-6 sm:p-8 text-cream-50 shadow-2xl relative overflow-hidden border border-espresso-700">
+                            <div class="flex items-center justify-between pb-6 border-b border-espresso-700/80">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-caramel-500 flex items-center justify-center font-bold text-white">
+                                        <i data-lucide="coffee" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="font-bold text-base leading-tight">Eksperimen Fokus & Rasa</h2>
+                                        <p class="text-xs text-cream-300">Acoustic Pod + QR Signature Coffee</p>
+                                    </div>
+                                </div>
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5">
+                                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> 28 dB Quiet Zone
+                                </span>
+                            </div>
+
+                            <!-- Visual Illustration of Acoustic Zone + Coffee -->
+                            <div class="my-6 bg-espresso-800/90 rounded-2xl p-5 border border-espresso-700 space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs uppercase tracking-wider font-bold text-caramel-400">Peredam Akustik Aktif</span>
+                                    <div class="flex items-end gap-1 h-5">
+                                        <span class="w-1 bg-caramel-400 h-2 rounded-full"></span>
+                                        <span class="w-1 bg-caramel-400 h-3 rounded-full"></span>
+                                        <span class="w-1 bg-caramel-400 h-2 rounded-full"></span>
+                                        <span class="w-1 bg-caramel-400 h-2.5 rounded-full"></span>
+                                        <span class="text-[11px] text-cream-200 ml-1.5">Suara Teredam 85%</span>
+                                    </div>
+                                </div>
+
+                                <!-- Mini Preview of Custom Recipe Card -->
+                                <div class="bg-cream-100 text-espresso-950 rounded-xl p-4 shadow-md">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-espresso-800 text-cream-50">Resep Tersimpan</span>
+                                            <h3 class="font-extrabold text-base mt-1.5">Deven's Late Night Thesis</h3>
+                                            <p class="text-xs text-espresso-700 mt-0.5">Arabica • Oat Milk • 50% Sugar • Caramel</p>
+                                        </div>
+                                        <span class="font-extrabold text-sm text-caramel-600 bg-caramel-500/15 px-2.5 py-1 rounded-lg">Rp 30.000</span>
+                                    </div>
+                                    <div class="mt-3 pt-3 border-t border-cream-300 flex items-center justify-between text-xs">
+                                        <span class="text-espresso-700 flex items-center gap-1 font-medium">
+                                            <i data-lucide="zap" class="w-3.5 h-3.5 text-caramel-600"></i> Diantar ke Meja Fokus #04
+                                        </span>
+                                        <a href="#simulator" class="font-bold text-espresso-900 underline hover:text-caramel-600">Ubah Racikan &rarr;</a>
+                                    </div>
+                                </div>
+
+                                <!-- Key Metrics Strip -->
+                                <div class="grid grid-cols-3 gap-2 pt-1 text-center">
+                                    <div class="bg-espresso-950/60 p-2.5 rounded-xl">
+                                        <p class="text-lg font-extrabold text-caramel-400">0 Menit</p>
+                                        <p class="text-[11px] text-cream-300">Waktu Antre</p>
+                                    </div>
+                                    <div class="bg-espresso-950/60 p-2.5 rounded-xl">
+                                        <p class="text-lg font-extrabold text-caramel-400">36+</p>
+                                        <p class="text-[11px] text-cream-300">Kombinasi Kopi</p>
+                                    </div>
+                                    <div class="bg-espresso-950/60 p-2.5 rounded-xl">
+                                        <p class="text-lg font-extrabold text-caramel-400">Rp 25rb</p>
+                                        <p class="text-[11px] text-cream-300">Mulai Dari</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Testimonial Persona Quote -->
+                            <div class="flex items-center gap-3.5 bg-espresso-950/50 p-3.5 rounded-2xl border border-espresso-700/60">
+                                <div class="w-10 h-10 rounded-full bg-caramel-500/30 border border-caramel-400 flex items-center justify-center font-bold text-sm text-caramel-300 shrink-0">
+                                    DF
+                                </div>
+                                <p class="text-xs text-cream-200 italic leading-relaxed">
+                                    "Biasanya rapat HIMMA atau nugas di kantin panas dan berisik. Di STAYa, ruangannya kedap suara dan kopinya pas di kantong mahasiswa!"
+                                    <span class="not-italic font-bold text-white block mt-0.5">— Deven F., Mahasiswa Aktif (20 Thn)</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. VISUAL & INFOGRAFIS MASALAH VS SOLUSI -->
+    <section id="masalah-solusi" class="py-16 lg:py-24 bg-espresso-950 text-cream-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="px-3.5 py-1 rounded-full bg-caramel-500/20 text-caramel-400 text-xs font-bold uppercase tracking-widest">Fakta & Riset Masalah</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mt-3 tracking-tight">Mengapa Sulit Fokus di Kafe Biasa?</h2>
+                <p class="text-cream-300 mt-3 text-base sm:text-lg">
+                    Banyak kafe komersial hanya mengutamakan perputaran meja cepat (*high turnover*), musik keras, dan kursi yang tidak ergonomis untuk bekerja lama.
+                </p>
+            </div>
+
+            <!-- Infographic Highlight Card (73% Jakpat Survey Data) -->
+            <div class="bg-gradient-to-br from-espresso-800 to-espresso-900 rounded-3xl p-6 sm:p-10 border border-espresso-700 shadow-xl mb-12">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-5 text-center lg:text-left border-b lg:border-b-0 lg:border-r border-espresso-700 pb-6 lg:pb-0 lg:pr-8">
+                        <div class="inline-flex items-baseline gap-2">
+                            <span class="text-6xl sm:text-7xl font-black text-caramel-400">73%</span>
+                            <span class="text-lg font-bold text-red-400 flex items-center gap-1">
+                                <i data-lucide="trending-up" class="w-5 h-5"></i> Stres & Hilang Fokus
+                            </span>
+                        </div>
+                        <p class="text-lg font-bold text-white mt-2">
+                            Pekerja urban dan mahasiswa merasa stres serta kesulitan fokus saat bekerja di tempat umum yang bising.
+                        </p>
+                        <p class="text-xs text-cream-300 mt-2">
+                            Sumber: Survei Stres Kerja dan Produktivitas Masyarakat Urban, Jakpat (2023) & Validasi GOOTB STAYa.
+                        </p>
+                    </div>
+
+                    <!-- Interactive Noise & Productivity Simulator -->
+                    <div class="lg:col-span-7 space-y-5">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <h3 class="font-bold text-base text-cream-100 flex items-center gap-2">
+                                <i data-lucide="activity" class="w-5 h-5 text-caramel-400"></i>
+                                <span>Simulasi Perbandingan Lingkungan Kerja (Klik untuk Bandingkan):</span>
+                            </h3>
+                            <div class="inline-flex rounded-xl bg-espresso-950 p-1 border border-espresso-700">
+                                <button id="btnModeNoisy" onclick="switchEnvironmentMode('noisy')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-red-500/20 text-red-300 border border-red-500/40">
+                                    Kafe Biasa / Kantin (78 dB)
+                                </button>
+                                <button id="btnModeStaya" onclick="switchEnvironmentMode('staya')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-caramel-500 text-white shadow">
+                                    Zona Fokus STAYa (28 dB)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Bars -->
+                        <div class="space-y-4 bg-espresso-950/70 p-5 rounded-2xl border border-espresso-700/80">
+                            <div>
+                                <div class="flex justify-between text-xs font-bold mb-1.5">
+                                    <span class="text-cream-200">Tingkat Kebisingan Ruangan (Polusi Suara)</span>
+                                    <span id="metricNoiseVal" class="text-emerald-400">28 dB (Sangat Tenang / Kedap Suara)</span>
+                                </div>
+                                <div class="w-full h-3 bg-espresso-800 rounded-full overflow-hidden">
+                                    <div id="barNoise" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 22%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-bold mb-1.5">
+                                    <span class="text-cream-200">Daya Tahan Fokus & Kenyamanan Ergonomis</span>
+                                    <span id="metricFocusVal" class="text-caramel-400">92% (Optimal & Produktif)</span>
+                                </div>
+                                <div class="w-full h-3 bg-espresso-800 rounded-full overflow-hidden">
+                                    <div id="barFocus" class="h-full bg-caramel-500 rounded-full transition-all duration-500" style="width: 92%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-bold mb-1.5">
+                                    <span class="text-cream-200">Efisiensi Waktu Pesan Kopi & Ketersediaan Colokan</span>
+                                    <span id="metricEfficiencyVal" class="text-emerald-400">98% (Scan QR Meja & Stopkontak Tiap Kursi)</span>
+                                </div>
+                                <div class="w-full h-3 bg-espresso-800 rounded-full overflow-hidden">
+                                    <div id="barEfficiency" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 98%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side-by-Side Comparison Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Kafe Biasa / Kantin -->
+                <div class="bg-espresso-900/60 rounded-3xl p-7 border border-red-500/20">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-11 h-11 rounded-2xl bg-red-500/15 text-red-400 flex items-center justify-center">
+                            <i data-lucide="x-circle" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Alternatif Saat Ini (Kantin / Kafe Komersial)</h3>
+                            <p class="text-xs text-cream-300">Keluhan utama dari hasil validasi wawancara pengguna</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3.5 text-sm text-cream-200">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="volume-x" class="w-5 h-5 text-red-400 shrink-0 mt-0.5"></i>
+                            <span><strong>Polusi Suara Tinggi:</strong> Tidak ada pemisahan zona antara pengunjung yang mengobrol keras dengan yang sedang mengerjakan tugas/rapat.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="battery-warning" class="w-5 h-5 text-red-400 shrink-0 mt-0.5"></i>
+                            <span><strong>Minim Colokan & Wi-Fi Lambat:</strong> Harus berebut stopkontak dan koneksi internet sering terputus saat jam sibuk.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="wallet" class="w-5 h-5 text-red-400 shrink-0 mt-0.5"></i>
+                            <span><strong>Harga Mahal & Rasa Standar:</strong> Kafe besar mematok harga Rp 45.000–Rp 60.000+ dengan opsi kustomisasi kopi yang sangat terbatas.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Solusi STAYa -->
+                <div class="bg-gradient-to-b from-espresso-800 to-espresso-900 rounded-3xl p-7 border-2 border-caramel-500 shadow-xl relative">
+                    <span class="absolute -top-3.5 right-6 px-3.5 py-1 rounded-full bg-caramel-500 text-white text-xs font-extrabold uppercase tracking-wider shadow">Solusi Terbaik STAYa</span>
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-11 h-11 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                            <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Pengalaman Produktif di STAYa</h3>
+                            <p class="text-xs text-caramel-400">Dirancang khusus untuk fokus mahasiswa & pekerja kreatif</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3.5 text-sm text-cream-100">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="ear-off" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i>
+                            <span><strong>Zona Fokus Kedap Suara:</strong> Dilengkapi panel akustik peredam suara dan pemisahan tegas antara *Quiet Focus Zone* & *Social Lounge*.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="plug-zap" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i>
+                            <span><strong>Furnitur Ergonomis & Fasilitas Penuh:</strong> Kursi kerja penopang punggung, colokan listrik di tiap meja, dan Wi-Fi dedikasi 150 Mbps.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="QrCode" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i>
+                            <span><strong>STAYa Your Signature (Mulai Rp 25.000):</strong> Bebas racik biji kopi, susu, gula, dan aroma via QR meja tanpa antre, plus simpan resep pribadi!</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. FITUR & MANFAAT UTAMA (4 PILAR MANFAAT STAYA) -->
+    <section id="fitur" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-14">
+            <span class="px-3.5 py-1 rounded-full bg-caramel-500/15 text-caramel-600 text-xs font-extrabold uppercase tracking-widest">Nilai Tambah Kami</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-espresso-950 mt-3 tracking-tight">4 Pilar Utama Pengalaman STAYa</h2>
+            <p class="text-espresso-700 mt-3 text-base sm:text-lg">
+                Lebih dari sekadar kedai kopi, STAYa menggabungkan manfaat fungsional, emosional, sosial, dan dampak positif bagi masyarakat.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Pillar 1 -->
+            <div class="bg-cream-50 rounded-3xl p-6 border border-cream-300 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-espresso-800 text-caramel-400 flex items-center justify-center mb-5 shadow">
+                        <i data-lucide="headphones" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-caramel-600">Manfaat Fungsional</span>
+                    <h3 class="text-xl font-extrabold text-espresso-950 mt-1 mb-2.5">Ruang Kedap Suara & Ergonomis</h3>
+                    <p class="text-sm text-espresso-700 leading-relaxed">
+                        Dilengkapi peredam akustik, kursi kerja ergonomis untuk durasi lama, stopkontak di setiap titik duduk, dan internet super cepat.
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-cream-200 flex items-center justify-between text-xs font-bold text-espresso-800">
+                    <span>Individual & Group Pod</span>
+                    <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
+                </div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="bg-cream-50 rounded-3xl p-6 border border-cream-300 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-caramel-500 text-white flex items-center justify-center mb-5 shadow">
+                        <i data-lucide="Fingerprint" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-caramel-600">Manfaat Emosional</span>
+                    <h3 class="text-xl font-extrabold text-espresso-950 mt-1 mb-2.5">STAYa Your Signature</h3>
+                    <p class="text-sm text-espresso-700 leading-relaxed">
+                        Ciptakan identitas kopi Anda sendiri. Pilih karakter biji Arabica atau Robusta, susu Oat atau Full Cream, takaran manis, hingga aroma favorit.
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-cream-200 flex items-center justify-between text-xs font-bold text-espresso-800">
+                    <span>Harga Ramah Mahasiswa</span>
+                    <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
+                </div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="bg-cream-50 rounded-3xl p-6 border border-cream-300 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-espresso-800 text-caramel-400 flex items-center justify-center mb-5 shadow">
+                        <i data-lucide="smartphone" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-caramel-600">Efisiensi Teknologi</span>
+                    <h3 class="text-xl font-extrabold text-espresso-950 mt-1 mb-2.5">Tanpa Antre & 1-Click Reorder</h3>
+                    <p class="text-sm text-espresso-700 leading-relaxed">
+                        Pindai QR dari meja Anda tanpa perlu meninggalkan laptop. Simpan racikan ke *database* favorit dan pesan ulang kapan saja dalam satu ketukan.
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-cream-200 flex items-center justify-between text-xs font-bold text-espresso-800">
+                    <span>Menu Digital QR Meja</span>
+                    <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
+                </div>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="bg-cream-50 rounded-3xl p-6 border border-cream-300 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-700 text-white flex items-center justify-center mb-5 shadow">
+                        <i data-lucide="leaf" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Manfaat Sosial & Alam</span>
+                    <h3 class="text-xl font-extrabold text-espresso-950 mt-1 mb-2.5">Kopi Lokal & Eco-Friendly</h3>
+                    <p class="text-sm text-espresso-700 leading-relaxed">
+                        Memberdayakan barista lokal, menggunakan 100% biji kopi terbaik Nusantara, serta mengurangi limbah plastik dengan gelas pakai ulang (*reusable cup*).
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-cream-200 flex items-center justify-between text-xs font-bold text-espresso-800">
+                    <span>Komunitas & Keberlanjutan</span>
+                    <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SIMULATOR INTERAKTIF / DEMO APLIKASI "STAYA YOUR SIGNATURE" -->
+    <section id="simulator" class="py-16 lg:py-24 bg-cream-200/70 border-y border-cream-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="px-3.5 py-1 rounded-full bg-espresso-800 text-cream-50 text-xs font-bold uppercase tracking-widest">Prototipe Interaktif</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-espresso-950 mt-3 tracking-tight">Coba Demo "STAYa Your Signature"</h2>
+                <p class="text-espresso-700 mt-3 text-base sm:text-lg">
+                    Rasakan kemudahan meracik kopi fokus Anda langsung dari layar ponsel seperti saat memindai QR Code di meja *outlet* STAYa.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                
+                <!-- Left/Center: Interactive Mobile App Prototype (Matching Figma Screen from PDF) -->
+                <div class="lg:col-span-7 bg-cream-50 rounded-[32px] p-6 sm:p-8 border-2 border-espresso-800/15 shadow-xl">
+                    <!-- App Top Bar -->
+                    <div class="flex items-center justify-between pb-5 mb-6 border-b border-cream-200">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-2xl bg-espresso-800 text-cream-50 flex items-center justify-center font-extrabold text-xl">
+                                S
+                            </div>
+                            <div>
+                                <h3 class="font-extrabold text-lg text-espresso-950 leading-none">STAYa</h3>
+                                <p class="text-xs text-espresso-700 mt-1">Rancang Kopi Fokusmu • Meja #08</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="applyPresetRecipe('focus')" class="px-3 py-1.5 rounded-full bg-caramel-500/15 hover:bg-caramel-500/25 text-caramel-600 text-xs font-extrabold flex items-center gap-1.5 transition-colors" title="Terapkan Rekomendasi Fokus">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                                <span>Focus Mode Preset</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Signature Header Banner inside App -->
+                    <div class="bg-espresso-800 text-cream-50 rounded-2xl p-4 sm:p-5 mb-6 shadow-md flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-12 h-12 rounded-xl bg-espresso-700 flex items-center justify-center text-2xl shrink-0">
+                                ☕
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-extrabold text-base sm:text-lg">STAYa Your Signature</span>
+                                </div>
+                                <p id="signatureSummaryText" class="text-xs sm:text-sm text-cream-200 mt-0.5 font-medium">
+                                    Arabica • Oat Milk • 50% Sugar • Caramel
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <span class="text-[11px] uppercase tracking-wider text-cream-300 block">Estimasi</span>
+                            <span id="topPriceBadge" class="text-lg font-extrabold text-caramel-400">Rp 30.000</span>
+                        </div>
+                    </div>
+
+                    <!-- Custom Recipe Name Input -->
+                    <div class="mb-6">
+                        <label for="recipeCustomName" class="block text-xs font-extrabold uppercase tracking-wider text-espresso-700 mb-2">
+                            Nama Racikan Personal Anda (Opsional)
+                        </label>
+                        <input type="text" id="recipeCustomName" placeholder="Contoh: Kopi Kejar Skripsi / Fokus Rapat HIMMA" 
+                            class="w-full px-4 py-3 rounded-xl bg-cream-100 border border-cream-300 text-sm font-semibold text-espresso-950 focus:outline-none focus:border-espresso-800 transition-colors">
+                    </div>
+
+                    <!-- STEP 1: CHOOSE BEANS -->
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-espresso-900">1. CHOOSE BEANS</span>
+                            <span class="text-xs font-semibold text-caramel-600">Wajib • Harga Dasar Rp 25.000</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3.5">
+                            <button type="button" onclick="selectOption('bean', 'Arabica', 0)" id="bean-Arabica"
+                                class="option-btn p-4 rounded-2xl border-2 text-left transition-all bg-espresso-800 text-cream-50 border-espresso-800 shadow-sm">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-extrabold text-base">Arabica</span>
+                                    <span class="text-xs px-2 py-0.5 rounded-full bg-cream-50/20">Populer</span>
+                                </div>
+                                <p class="text-xs opacity-80 mt-1">Smooth & Fruity (Asam Segar, Kafein Sedang)</p>
+                            </button>
+                            <button type="button" onclick="selectOption('bean', 'Robusta', 0)" id="bean-Robusta"
+                                class="option-btn p-4 rounded-2xl border-2 text-left transition-all bg-cream-100 text-espresso-900 border-cream-300 hover:border-espresso-700">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-extrabold text-base">Robusta</span>
+                                    <span class="text-xs px-2 py-0.5 rounded-full bg-espresso-800/10">Extra Strong</span>
+                                </div>
+                                <p class="text-xs opacity-75 mt-1">Bold & Strong (Kafein Tinggi Anti Ngantuk)</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: MILK TYPE -->
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-espresso-900">2. MILK TYPE</span>
+                            <span class="text-xs font-semibold text-espresso-700">Pilihan Susu</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3.5">
+                            <button type="button" onclick="selectOption('milk', 'Full Cream', 0)" id="milk-Full Cream"
+                                class="option-btn p-4 rounded-2xl border-2 text-left transition-all bg-cream-100 text-espresso-900 border-cream-300 hover:border-espresso-700">
+                                <span class="font-extrabold text-base block">Full Cream</span>
+                                <span class="text-xs opacity-75 block mt-1">Rich & Creamy (Termasuk)</span>
+                            </button>
+                            <button type="button" onclick="selectOption('milk', 'Oat Milk', 5000)" id="milk-Oat Milk"
+                                class="option-btn p-4 rounded-2xl border-2 text-left transition-all bg-espresso-800 text-cream-50 border-espresso-800 shadow-sm">
+                                <span class="font-extrabold text-base block">Oat Milk</span>
+                                <span class="text-xs opacity-90 block mt-1">+ Rp 5.000 (Plant-Based Favorit)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: SWEETNESS LEVEL -->
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-espresso-900">3. SWEETNESS LEVEL</span>
+                            <span class="text-xs font-semibold text-espresso-700">Takaran Gula</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <button type="button" onclick="selectOption('sugar', '100% Sugar', 0)" id="sugar-100% Sugar"
+                                class="option-btn p-3.5 rounded-2xl border-2 text-center transition-all bg-cream-100 text-espresso-900 border-cream-300 hover:border-espresso-700">
+                                <span class="font-extrabold text-sm sm:text-base block">100%</span>
+                                <span class="text-[11px] opacity-75 block mt-0.5">Normal</span>
+                            </button>
+                            <button type="button" onclick="selectOption('sugar', '50% Sugar', 0)" id="sugar-50% Sugar"
+                                class="option-btn p-3.5 rounded-2xl border-2 text-center transition-all bg-espresso-800 text-cream-50 border-espresso-800 shadow-sm">
+                                <span class="font-extrabold text-sm sm:text-base block">50%</span>
+                                <span class="text-[11px] opacity-90 block mt-0.5">Less Sweet</span>
+                            </button>
+                            <button type="button" onclick="selectOption('sugar', '0% Sugar', 0)" id="sugar-0% Sugar"
+                                class="option-btn p-3.5 rounded-2xl border-2 text-center transition-all bg-cream-100 text-espresso-900 border-cream-300 hover:border-espresso-700">
+                                <span class="font-extrabold text-sm sm:text-base block">0%</span>
+                                <span class="text-[11px] opacity-75 block mt-0.5">No Sugar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: FLAVOR -->
+                    <div class="mb-8">
+                        <div class="flex justify-between items-center mb-2.5">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-espresso-900">4. FLAVOR</span>
+                            <span class="text-xs font-semibold text-espresso-700">Aroma Tambahan (Gratis)</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <button type="button" onclick="selectOption('flavor', 'Vanilla', 0)" id="flavor-Vanilla"
+                                class="option-btn p-3.5 rounded-2xl border-2 text-center transition-all bg-cream-100 text-espresso-900 border-cream-300 hover:border-espresso-700">
+                                <span class="font-extrabold text-sm sm:text-base block">Vanilla</span>
+                                <span class="text-[11px] opacity-75 block mt-0.5">Soft Aroma</span>
+                            </button>
+                            <button type="button" onclick="selectOption('flavor', 'Caramel', 0)" id="flavor-Caramel"
+                                class="option-btn p-3.5 rounded-2xl border-2 text-center transition-all bg-espresso-800 text-cream-50 border-espresso-800 shadow-sm">
+                                <span class="font-extrabold text-sm sm:text-base block">Caramel</span>
+                                <span class="text-[11px] opacity-90 block mt-0.5">Sweet Buttery</span>
+                            </button>
+                            <button type="button" onclick="selectOption('flavor', 'Hazelnut', 0)" id="flavor-Hazelnut"
+                                class="option-btn p-3.5 rounded-2xl border-2 text-center transition-all bg-cream-100 text-espresso-900 border-cream-300 hover:border-espresso-700">
+                                <span class="font-extrabold text-sm sm:text-base block">Hazelnut</span>
+                                <span class="text-[11px] opacity-75 block mt-0.5">Nutty Warm</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Price Footer & Action Buttons (Matching Figma Layout) -->
+                    <div class="bg-cream-100 rounded-2xl p-5 border border-cream-300 space-y-3.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-bold text-espresso-700">Estimated Price</span>
+                            <span id="bottomTotalPrice" class="text-2xl font-extrabold text-espresso-950">Total: Rp 30.000</span>
+                        </div>
+
+                        <button type="button" onclick="saveCurrentRecipe()" 
+                            class="w-full py-3.5 px-4 rounded-xl bg-cream-50 hover:bg-cream-200 text-espresso-900 border border-cream-300 font-bold text-sm flex items-center justify-center gap-2 transition-all">
+                            <i data-lucide="heart" class="w-4 h-4 text-red-500 fill-red-500"></i>
+                            <span>Save as Favorite Recipe (Simpan ke Database)</span>
+                        </button>
+
+                        <button type="button" onclick="openCheckoutModal()" 
+                            class="w-full py-4 px-5 rounded-xl bg-espresso-800 hover:bg-espresso-950 text-cream-50 font-extrabold text-base flex items-center justify-center gap-2 shadow-lg transition-all">
+                            <span>Proceed to Checkout</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column: Visual Cup Anatomy & Saved Favorite Recipes Database (1-Click Reorder) -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Dynamic Cup Layer Visualizer -->
+                    <div class="bg-espresso-900 text-cream-50 rounded-3xl p-6 sm:p-7 border border-espresso-700 shadow-xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-extrabold text-lg">Visualisasi Komposisi Gelas</h3>
+                            <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">Reusable Cup Ready</span>
+                        </div>
+                        <p class="text-xs text-cream-300 mb-6">
+                            Setiap pilihan Anda langsung diterjemahkan ke takaran presisi mesin espresso & barista STAYa.
+                        </p>
+
+                        <!-- Visual Cup Representation -->
+                        <div class="flex items-center gap-6">
+                            <div class="w-28 h-40 mx-auto rounded-b-3xl rounded-t-lg border-4 border-cream-200/80 p-1.5 flex flex-col justify-end gap-1 bg-espresso-950/60 relative shrink-0">
+                                <!-- Lid -->
+                                <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-3 bg-caramel-500 rounded-t-xl"></div>
+                                <!-- Flavor Layer -->
+                                <div id="cupLayerFlavor" class="w-full h-6 rounded-sm bg-amber-500/80 flex items-center justify-center text-[10px] font-bold text-espresso-950 transition-all">
+                                    Caramel
+                                </div>
+                                <!-- Sweetness Layer -->
+                                <div id="cupLayerSugar" class="w-full h-5 rounded-sm bg-cream-200/90 flex items-center justify-center text-[10px] font-bold text-espresso-950 transition-all">
+                                    50% Sugar
+                                </div>
+                                <!-- Milk Layer -->
+                                <div id="cupLayerMilk" class="w-full h-12 rounded-sm bg-cream-100 flex items-center justify-center text-[10px] font-bold text-espresso-950 transition-all">
+                                    Oat Milk
+                                </div>
+                                <!-- Espresso Bean Layer -->
+                                <div id="cupLayerBean" class="w-full h-10 rounded-b-2xl bg-espresso-700 flex items-center justify-center text-[10px] font-bold text-cream-50 transition-all">
+                                    Arabica
+                                </div>
+                            </div>
+
+                            <!-- Taste Profile Breakdown -->
+                            <div class="flex-1 space-y-3 text-xs">
+                                <div class="bg-espresso-800/90 p-3 rounded-xl border border-espresso-700">
+                                    <span class="text-cream-300 block">Karakter Kafein & Body:</span>
+                                    <strong id="profileBodyText" class="text-sm text-caramel-400">Smooth, Medium Caffeine (Cocok Fokus Santai)</strong>
+                                </div>
+                                <div class="bg-espresso-800/90 p-3 rounded-xl border border-espresso-700">
+                                    <span class="text-cream-300 block">Tekstur & Kalori:</span>
+                                    <strong id="profileCalorieText" class="text-sm text-emerald-400">Plant-Based Creamy • Rendah Gula (~110 kkal)</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saved Recipes Database (1-Click Reorder Feature) -->
+                    <div class="bg-cream-50 rounded-3xl p-6 sm:p-7 border border-cream-300 shadow-sm">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="database" class="w-5 h-5 text-caramel-600"></i>
+                                <h3 class="font-extrabold text-lg text-espresso-950">Database Resep Favorit Anda</h3>
+                            </div>
+                            <span id="savedCountBadge" class="px-2.5 py-0.5 rounded-full bg-espresso-800 text-cream-50 text-xs font-bold">2 Resep</span>
+                        </div>
+                        <p class="text-xs text-espresso-700 mb-4">
+                            Klik <strong>"Pesan 1-Klik"</strong> pada resep tersimpan untuk memuat ulang racikan tanpa perlu mengatur dari awal.
+                        </p>
+
+                        <div id="savedRecipesList" class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                            <!-- Populated via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FORMULIR RESERVASI RUANG FOKUS & PROMO KOMUNITAS -->
+    <section id="reservasi" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-espresso-900 text-cream-50 rounded-[36px] p-6 sm:p-10 lg:p-14 shadow-2xl border border-espresso-700 relative overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <!-- Left Info -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="px-3.5 py-1 rounded-full bg-caramel-500 text-white text-xs font-extrabold uppercase tracking-wider">Booking Tanpa Ribet</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                        Reservasi Ruang Kedap Suara & Diskusi Komunitas
+                    </h2>
+                    <p class="text-cream-200 text-sm sm:text-base leading-relaxed">
+                        Pastikan kursi ergonomis atau ruang rapat organisasi (HIMMA / Startup Lokal) Anda tersedia sebelum datang. Gratis reservasi, cukup pesan minuman saat tiba di lokasi!
+                    </p>
+
+                    <div class="space-y-3 pt-2 text-sm">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-caramel-500/20 text-caramel-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="user-check" class="w-4 h-4"></i>
+                            </div>
+                            <span><strong>Individual Focus Pod:</strong> Meja tenang personal + lampu baca & 2 stopkontak.</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-caramel-500/20 text-caramel-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                            </div>
+                            <span><strong>Acoustic Discussion Pod (4–8 Orang):</strong> Ruang rapat kedap suara + layar proyektor/TV.</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-caramel-500/20 text-caramel-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="percent" class="w-4 h-4"></i>
+                            </div>
+                            <span><strong>Diskon 15% Mahasiswa & Organisasi:</strong> Tunjukkan KTM saat *check-in* di barista.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Reservation Form -->
+                <div class="lg:col-span-7">
+                    <form id="reservationForm" onsubmit="handleReservationSubmit(event)" class="bg-cream-50 text-espresso-950 rounded-3xl p-6 sm:p-8 shadow-lg space-y-4">
+                        <h3 class="text-xl font-extrabold text-espresso-950 mb-2">Formulir Reservasi Meja Fokus</h3>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase tracking-wider text-espresso-700 mb-1.5">Nama Lengkap *</label>
+                                <input type="text" id="resName" required placeholder="Contoh: Anggita Rahma" 
+                                    class="w-full px-4 py-3 rounded-xl bg-cream-100 border border-cream-300 text-sm font-semibold focus:outline-none focus:border-espresso-800">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase tracking-wider text-espresso-700 mb-1.5">Nomor WhatsApp *</label>
+                                <input type="tel" id="resPhone" required placeholder="0812xxxx" 
+                                    class="w-full px-4 py-3 rounded-xl bg-cream-100 border border-cream-300 text-sm font-semibold focus:outline-none focus:border-espresso-800">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase tracking-wider text-espresso-700 mb-1.5">Kategori Pengunjung *</label>
+                                <select id="resCategory" class="w-full px-4 py-3 rounded-xl bg-cream-100 border border-cream-300 text-sm font-semibold focus:outline-none focus:border-espresso-800">
+                                    <option value="Mahasiswa (Diskon 15%)">Mahasiswa (Promo Diskon 15%)</option>
+                                    <option value="Pengurus HIMMA / Organisasi Kampus">Pengurus HIMMA / Organisasi Kampus</option>
+                                    <option value="Pekerja Remote / Freelancer">Pekerja Remote / Freelancer</option>
+                                    <option value="Komunitas Startup / Umum">Komunitas Startup / Umum</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase tracking-wider text-espresso-700 mb-1.5">Pilihan Zona Ruang *</label>
+                                <select id="resZone" class="w-full px-4 py-3 rounded-xl bg-cream-100 border border-cream-300 text-sm font-semibold focus:outline-none focus:border-espresso-800">
+                                    <option value="Individual Focus Pod (Kedap Suara)">Individual Focus Pod (Kedap Suara - 1 Orang)</option>
+                                    <option value="Acoustic Discussion Pod (4-8 Orang)">Acoustic Discussion Room (Rapat 4–8 Orang)</option>
+                                    <option value="Ergonomic Quiet Desk (2 Orang)">Ergonomic Quiet Desk (Meja Fokus 2 Orang)</option>
+                                    <option value="Relax & Social Lounge">Relax & Social Lounge (Santai)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase tracking-wider text-espresso-700 mb-1.5">Tanggal & Jam Kedatangan *</label>
+                                <input type="time" id="resTime" required value="13:00"
+                                    class="w-full px-4 py-3 rounded-xl bg-cream-100 border border-cream-300 text-sm font-semibold focus:outline-none focus:border-espresso-800">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase tracking-wider text-espresso-700 mb-1.5">Durasi Menetap</label>
+                                <select id="resDuration" class="w-full px-4 py-3 rounded-xl bg-cream-100 border border-cream-300 text-sm font-semibold focus:outline-none focus:border-espresso-800">
+                                    <option value="2 Jam">2 Jam Fokus</option>
+                                    <option value="4 Jam (Half-Day Focus)">4 Jam (Half-Day Focus)</option>
+                                    <option value="6+ Jam (Full-Day Skripsi/Kerja)">6+ Jam (Full-Day Skripsi/Kerja)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="pt-2">
+                            <button type="submit" class="w-full py-4 rounded-xl bg-caramel-500 hover:bg-caramel-600 text-white font-extrabold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                                <i data-lucide="calendar-check-2" class="w-5 h-5"></i>
+                                <span>Konfirmasi Reservasi Ruang Fokus</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. PAPAN FAQ DIGITAL & INFORMASI KONTAK / SALURAN DISTRIBUSI -->
+    <section id="kontak" class="py-12 lg:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            
+            <!-- Digital FAQ Accordion -->
+            <div class="lg:col-span-6 space-y-4">
+                <span class="px-3 py-1 rounded-full bg-espresso-800/10 text-espresso-800 text-xs font-extrabold uppercase tracking-wider">Papan FAQ Digital</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso-950">Pertanyaan yang Sering Diajukan</h2>
+                
+                <div class="space-y-3 pt-2">
+                    <details class="group bg-cream-50 rounded-2xl p-5 border border-cream-300 cursor-pointer" open>
+                        <summary class="font-extrabold text-espresso-950 flex justify-between items-center list-none">
+                            <span>Apakah ada biaya tambahan untuk duduk di Ruang Kedap Suara?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-caramel-600 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="text-sm text-espresso-700 mt-3 leading-relaxed">
+                            Tidak ada biaya sewa tambahan untuk *Individual Focus Pod*! Anda cukup memesan minimal 1 minuman *STAYa Your Signature* (mulai Rp 25.000) dan langsung mendapatkan akses ruang tenang, Wi-Fi 150 Mbps, serta stopkontak meja.
+                        </p>
+                    </details>
+
+                    <details class="group bg-cream-50 rounded-2xl p-5 border border-cream-300 cursor-pointer">
+                        <summary class="font-extrabold text-espresso-950 flex justify-between items-center list-none">
+                            <span>Bagaimana cara memesan ulang resep kopi favorit saya?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-caramel-600 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="text-sm text-espresso-700 mt-3 leading-relaxed">
+                            Saat memindai QR Code di meja, racikan yang pernah Anda simpan akan muncul di bagian *Database Resep Favorit*. Cukup klik satu tombol dan barista kami langsung meraciknya sesuai takaran presisi Anda.
+                        </p>
+                    </details>
+
+                    <details class="group bg-cream-50 rounded-2xl p-5 border border-cream-300 cursor-pointer">
+                        <summary class="font-extrabold text-espresso-950 flex justify-between items-center list-none">
+                            <span>Apakah organisasi kampus (HIMMA) atau komunitas bisa kerja sama event?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-caramel-600 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="text-sm text-espresso-700 mt-3 leading-relaxed">
+                            Tentu! STAYa membuka program *GTM Mitra Kampus & Komunitas Startup* untuk lokasi *sharing session*, rapat pengurus, maupun *sponsorship* bazar kampus. Hubungi tim kami melalui WhatsApp Business.
+                        </p>
+                    </details>
+                </div>
+            </div>
+
+            <!-- Contact Channels & Location Card -->
+            <div class="lg:col-span-6">
+                <div class="bg-cream-50 rounded-3xl p-6 sm:p-8 border border-cream-300 shadow-sm h-full flex flex-col justify-between">
+                    <div>
+                        <span class="px-3 py-1 rounded-full bg-caramel-500/15 text-caramel-600 text-xs font-extrabold uppercase tracking-wider">Lokasi & Distribusi</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso-950 mt-2">Kunjungi Outlet STAYa</h2>
+                        <p class="text-sm text-espresso-700 mt-2">
+                            Berlokasi strategis di dekat area kampus utama dan kawasan industri/perkantoran untuk menunjang produktivitas harian Anda.
+                        </p>
+
+                        <div class="mt-6 space-y-4 text-sm">
+                            <div class="flex items-start gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-espresso-800 text-caramel-400 flex items-center justify-center shrink-0">
+                                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-extrabold text-espresso-950">Alamat Outlet Utama</h4>
+                                    <p class="text-espresso-700">Area Kampus Politeknik Astra, Cikarang Selatan, Kab. Bekasi, Jawa Barat (Buka Setiap Hari: 07.30 – 22.30 WIB)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center shrink-0">
+                                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-extrabold text-espresso-950">WhatsApp Business (Chatbot & Reservasi)</h4>
+                                    <p class="text-espresso-700">+62 812-8899-7766 (Direct Order, Reservasi & Layanan Pelanggan)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-caramel-500 text-white flex items-center justify-center shrink-0">
+                                    <i data-lucide="share-2" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-extrabold text-espresso-950">Media Sosial & Konten ASMR Kerja</h4>
+                                    <p class="text-espresso-700">Instagram & TikTok: <strong>@staya.coffee</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Multi-channel Buttons -->
+                    <div class="mt-8 pt-6 border-t border-cream-200 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <button onclick="triggerDirectChannel('WhatsApp Business STAYa')" class="py-3 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all">
+                            <i data-lucide="phone-call" class="w-4 h-4"></i>
+                            <span>Chat WhatsApp</span>
+                        </button>
+                        <button onclick="triggerDirectChannel('GoFood / GrabFood STAYa')" class="py-3 px-4 rounded-xl bg-espresso-800 hover:bg-espresso-950 text-cream-50 font-bold text-xs flex items-center justify-center gap-2 transition-all">
+                            <i data-lucide="shopping-bag" class="w-4 h-4 text-caramel-400"></i>
+                            <span>Order GoFood/Grab</span>
+                        </button>
+                        <button onclick="triggerDirectChannel('Instagram & TikTok @staya.coffee')" class="col-span-2 sm:col-span-1 py-3 px-4 rounded-xl bg-cream-200 hover:bg-cream-300 text-espresso-900 font-bold text-xs flex items-center justify-center gap-2 transition-all">
+                            <i data-lucide="instagram" class="w-4 h-4 text-caramel-600"></i>
+                            <span>@staya.coffee</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-espresso-950 text-cream-200 py-12 border-t border-espresso-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-caramel-500 text-white flex items-center justify-center font-extrabold text-lg">
+                    S
+                </div>
+                <div>
+                    <span class="font-extrabold text-white tracking-tight">STAYa Coffee & Focus Space</span>
+                    <p class="text-xs text-cream-300">Politeknik Astra, Cikarang Selatan • Wadhwani Foundation Venture</p>
+                </div>
+            </div>
+            <p class="text-xs text-cream-300 text-center sm:text-right">
+                &copy; 2026 STAYa Indonesia. Rancang Kopi Fokusmu, Ciptakan Ruang Produktifmu.
+            </p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE MODAL FOR CHECKOUT / RESERVATION CONFIRMATION -->
+    <div id="customModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-espresso-950/75 backdrop-blur-sm p-4">
+        <div class="bg-cream-50 text-espresso-950 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-cream-300 relative animate-float">
+            <button onclick="closeModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-cream-200 hover:bg-cream-300 flex items-center justify-center text-espresso-800">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div id="modalContent">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Current Customizer State (Defaults matching the Figma Prototype in PDF)
+        let currentRecipe = {
+            bean: 'Arabica',
+            milk: 'Oat Milk',
+            sugar: '50% Sugar',
+            flavor: 'Caramel',
+            basePrice: 25000,
+            milkExtra: 5000
+        };
+
+        // Initial Saved Recipes in Database
+        let savedRecipes = [
+            {
+                id: 1,
+                name: "STAYa Focus Signature",
+                bean: "Arabica",
+                milk: "Oat Milk",
+                sugar: "50% Sugar",
+                flavor: "Caramel",
+                price: 30000
+            },
+            {
+                id: 2,
+                name: "Begadang Revisi Booster",
+                bean: "Robusta",
+                milk: "Full Cream",
+                sugar: "100% Sugar",
+                flavor: "Hazelnut",
+                price: 25000
+            }
+        ];
+
+        // Initialize Icons and UI on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            updateCustomizerUI();
+            renderSavedRecipes();
+
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+
+        // Toast Notification Helper (Replaces alert)
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            const bgClass = type === 'success' ? 'bg-espresso-900 border-caramel-500 text-cream-50' : 'bg-caramel-600 border-white text-white';
+            
+            toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3.5 rounded-2xl shadow-xl border-l-4 ${bgClass} text-xs sm:text-sm font-bold transition-all duration-300`;
+            toast.innerHTML = `
+                <span>☕</span>
+                <span class="flex-1">${message}</span>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // Handle Option Selection in Simulator
+        function selectOption(category, value, extraCost) {
+            currentRecipe[category] = value;
+            if (category === 'milk') {
+                currentRecipe.milkExtra = extraCost;
+            }
+            updateCustomizerUI();
+        }
+
+        // Preset Mode Button
+        function applyPresetRecipe(mode) {
+            if (mode === 'focus') {
+                currentRecipe.bean = 'Robusta';
+                currentRecipe.milk = 'Oat Milk';
+                currentRecipe.sugar = '0% Sugar';
+                currentRecipe.flavor = 'Hazelnut';
+                currentRecipe.milkExtra = 5000;
+                document.getElementById('recipeCustomName').value = 'Deep Work Focus Mode';
+                updateCustomizerUI();
+                showToast('Preset "Focus Mode" diterapkan: Robusta + Oat Milk + 0% Sugar!');
+            }
+        }
+
+        // Update Customizer Buttons, Price, Summary & Visual Cup
+        function updateCustomizerUI() {
+            const totalPrice = currentRecipe.basePrice + currentRecipe.milkExtra;
+            const formattedPrice = 'Rp ' + totalPrice.toLocaleString('id-ID');
+
+            // Update Text Summary & Price Badges
+            const summaryStr = `${currentRecipe.bean} • ${currentRecipe.milk} • ${currentRecipe.sugar} • ${currentRecipe.flavor}`;
+            document.getElementById('signatureSummaryText').textContent = summaryStr;
+            document.getElementById('topPriceBadge').textContent = formattedPrice;
+            document.getElementById('bottomTotalPrice').textContent = `Total: ${formattedPrice}`;
+
+            // Highlight Selected Buttons
+            const groups = {
+                bean: ['Arabica', 'Robusta'],
+                milk: ['Full Cream', 'Oat Milk'],
+                sugar: ['100% Sugar', '50% Sugar', '0% Sugar'],
+                flavor: ['Vanilla', 'Caramel', 'Hazelnut']
+            };
+
+            Object.keys(groups).forEach(group => {
+                groups[group].forEach(optionVal => {
+                    const btn = document.getElementById(`${group}-${optionVal}`);
+                    if (!btn) return;
+                    if (currentRecipe[group] === optionVal) {
+                        btn.className = 'option-btn p-3.5 sm:p-4 rounded-2xl border-2 text-left transition-all bg-espresso-800 text-cream-50 border-espresso-800 shadow-sm';
+                        if (group === 'sugar' || group === 'flavor') {
+                            btn.classList.replace('text-left', 'text-center');
+                        }
+                    } else {
+                        btn.className = 'option-btn p-3.5 sm:p-4 rounded-2xl border-2 text-left transition-all bg-cream-100 text-espresso-900 border-cream-300 hover:border-espresso-700';
+                        if (group === 'sugar' || group === 'flavor') {
+                            btn.classList.replace('text-left', 'text-center');
+                        }
+                    }
+                });
+            });
+
+            // Update Cup Anatomy Visual Layers
+            document.getElementById('cupLayerBean').textContent = currentRecipe.bean;
+            document.getElementById('cupLayerMilk').textContent = currentRecipe.milk;
+            document.getElementById('cupLayerSugar').textContent = currentRecipe.sugar;
+            document.getElementById('cupLayerFlavor').textContent = currentRecipe.flavor;
+
+            // Update Taste Profile Notes
+            const bodyText = currentRecipe.bean === 'Arabica'
+                ? 'Smooth & Fruity, Medium Caffeine (Fokus Santai)'
+                : 'Bold & Strong, High Caffeine (Fokus Intens Anti Ngantuk)';
+            document.getElementById('profileBodyText').textContent = bodyText;
+
+            const calText = `${currentRecipe.milk} • ${currentRecipe.sugar} • Aroma ${currentRecipe.flavor}`;
+            document.getElementById('profileCalorieText').textContent = calText;
+        }
+
+        // Save Current Recipe to Favorites List
+        function saveCurrentRecipe() {
+            const customNameInput = document.getElementById('recipeCustomName');
+            const name = customNameInput.value.trim() || `Signature ${currentRecipe.bean} ${currentRecipe.flavor}`;
+            const price = currentRecipe.basePrice + currentRecipe.milkExtra;
+
+            const newRecipe = {
+                id: Date.now(),
+                name: name,
+                bean: currentRecipe.bean,
+                milk: currentRecipe.milk,
+                sugar: currentRecipe.sugar,
+                flavor: currentRecipe.flavor,
+                price: price
+            };
+
+            savedRecipes.unshift(newRecipe);
+            customNameInput.value = '';
+            renderSavedRecipes();
+            showToast(`Resep "${name}" berhasil disimpan ke Database Favorit!`);
+        }
+
+        // Render Saved Recipes List for 1-Click Reorder
+        function renderSavedRecipes() {
+            const listEl = document.getElementById('savedRecipesList');
+            const badgeEl = document.getElementById('savedCountBadge');
+            badgeEl.textContent = `${savedRecipes.length} Resep`;
+
+            listEl.innerHTML = savedRecipes.map(item => `
+                <div class="p-3.5 rounded-2xl bg-cream-100 border border-cream-300 flex items-center justify-between gap-3 hover:border-caramel-500 transition-all">
+                    <div>
+                        <h4 class="font-extrabold text-sm text-espresso-950">${item.name}</h4>
+                        <p class="text-xs text-espresso-700">${item.bean} • ${item.milk} • ${item.sugar} • ${item.flavor}</p>
+                        <span class="text-xs font-extrabold text-caramel-600">Rp ${item.price.toLocaleString('id-ID')}</span>
+                    </div>
+                    <button onclick="reorderSavedRecipe(${item.id})" class="px-3.5 py-2 rounded-xl bg-espresso-800 hover:bg-caramel-500 text-cream-50 text-xs font-bold shrink-0 transition-colors">
+                        Pesan 1-Klik
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // 1-Click Reorder Handler
+        function reorderSavedRecipe(id) {
+            const found = savedRecipes.find(r => r.id === id);
+            if (!found) return;
+            currentRecipe.bean = found.bean;
+            currentRecipe.milk = found.milk;
+            currentRecipe.sugar = found.sugar;
+            currentRecipe.flavor = found.flavor;
+            currentRecipe.milkExtra = found.milk === 'Oat Milk' ? 5000 : 0;
+            document.getElementById('recipeCustomName').value = found.name;
+            updateCustomizerUI();
+            showToast(`Racikan "${found.name}" dimuat! Siap dipesan tanpa antre.`);
+        }
+
+        // Open Checkout Modal
+        function openCheckoutModal() {
+            const totalPrice = currentRecipe.basePrice + currentRecipe.milkExtra;
+            const customName = document.getElementById('recipeCustomName').value.trim() || 'STAYa Your Signature';
+            const modal = document.getElementById('customModal');
+            const content = document.getElementById('modalContent');
+
+            content.innerHTML = `
+                <div class="text-center space-y-4">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/15 text-emerald-700 flex items-center justify-center mx-auto text-2xl font-bold">
+                        ✓
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-caramel-500/15 text-caramel-600 text-xs font-extrabold uppercase">Pesanan QR Meja #08 Siap</span>
+                    <h3 class="text-2xl font-extrabold text-espresso-950">${customName}</h3>
+                    <div class="bg-cream-100 p-4 rounded-2xl border border-cream-300 text-left text-xs space-y-1.5">
+                        <div class="flex justify-between"><span>Biji Kopi:</span><strong>${currentRecipe.bean}</strong></div>
+                        <div class="flex justify-between"><span>Pilihan Susu:</span><strong>${currentRecipe.milk}</strong></div>
+                        <div class="flex justify-between"><span>Takaran Gula:</span><strong>${currentRecipe.sugar}</strong></div>
+                        <div class="flex justify-between"><span>Aroma Tambahan:</span><strong>${currentRecipe.flavor}</strong></div>
+                        <div class="border-t border-cream-300 pt-2 mt-2 flex justify-between text-sm font-extrabold text-espresso-950">
+                            <span>Total Pembayaran (QRIS):</span>
+                            <span class="text-caramel-600">Rp ${totalPrice.toLocaleString('id-ID')}</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-espresso-700">
+                        Barista kami langsung meracik kopi Anda dan mengantarkannya ke meja fokus Anda tanpa perlu mengantre.
+                    </p>
+                    <button onclick="closeModal(); showToast('Pesanan diteruskan ke Barista STAYa!');" class="w-full py-3.5 rounded-xl bg-espresso-800 hover:bg-espresso-950 text-cream-50 font-extrabold text-sm">
+                        Selesai & Konfirmasi Pesanan
+                    </button>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // Switch Infographic Environment Mode (Noisy Cafe vs STAYa)
+        function switchEnvironmentMode(mode) {
+            const btnNoisy = document.getElementById('btnModeNoisy');
+            const btnStaya = document.getElementById('btnModeStaya');
+            const barNoise = document.getElementById('barNoise');
+            const barFocus = document.getElementById('barFocus');
+            const barEfficiency = document.getElementById('barEfficiency');
+
+            const metricNoiseVal = document.getElementById('metricNoiseVal');
+            const metricFocusVal = document.getElementById('metricFocusVal');
+            const metricEfficiencyVal = document.getElementById('metricEfficiencyVal');
+
+            if (mode === 'noisy') {
+                btnNoisy.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-red-600 text-white shadow';
+                btnStaya.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-espresso-900 text-cream-300';
+
+                barNoise.style.width = '88%';
+                barNoise.className = 'h-full bg-red-500 rounded-full transition-all duration-500';
+                metricNoiseVal.textContent = '78 dB (Bising & Banyak Distraksi)';
+                metricNoiseVal.className = 'text-red-400';
+
+                barFocus.style.width = '27%';
+                barFocus.className = 'h-full bg-red-500 rounded-full transition-all duration-500';
+                metricFocusVal.textContent = '27% (Stres & Cepat Lelah Mental)';
+                metricFocusVal.className = 'text-red-400';
+
+                barEfficiency.style.width = '30%';
+                barEfficiency.className = 'h-full bg-amber-500 rounded-full transition-all duration-500';
+                metricEfficiencyVal.textContent = '30% (Antre Panjang & Minim Colokan)';
+                metricEfficiencyVal.className = 'text-amber-400';
+            } else {
+                btnStaya.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-caramel-500 text-white shadow';
+                btnNoisy.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-red-500/20 text-red-300 border border-red-500/40';
+
+                barNoise.style.width = '22%';
+                barNoise.className = 'h-full bg-emerald-500 rounded-full transition-all duration-500';
+                metricNoiseVal.textContent = '28 dB (Sangat Tenang / Kedap Suara)';
+                metricNoiseVal.className = 'text-emerald-400';
+
+                barFocus.style.width = '92%';
+                barFocus.className = 'h-full bg-caramel-500 rounded-full transition-all duration-500';
+                metricFocusVal.textContent = '92% (Optimal & Produktif)';
+                metricFocusVal.className = 'text-caramel-400';
+
+                barEfficiency.style.width = '98%';
+                barEfficiency.className = 'h-full bg-emerald-500 rounded-full transition-all duration-500';
+                metricEfficiencyVal.textContent = '98% (Scan QR Meja & Stopkontak Tiap Kursi)';
+                metricEfficiencyVal.className = 'text-emerald-400';
+            }
+        }
+
+        // Simulate Real-Time Outlet Status Refresh
+        function refreshOutletStatus() {
+            const crowds = ['Tenang (32% Terisi)', 'Tenang (35% Terisi)', 'Kondusif (40% Terisi)'];
+            const seats = ['14 / 20 Kursi Kosong', '13 / 20 Kursi Kosong', '15 / 20 Kursi Kosong'];
+            const randomIdx = Math.floor(Math.random() * crowds.length);
+
+            document.getElementById('liveCrowdText').textContent = crowds[randomIdx];
+            document.getElementById('liveSeatText').textContent = seats[randomIdx];
+            showToast('Status Real-Time Outlet STAYa diperbarui!');
+        }
+
+        // Handle Reservation Form Submission
+        function handleReservationSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('resName').value;
+            const category = document.getElementById('resCategory').value;
+            const zone = document.getElementById('resZone').value;
+            const time = document.getElementById('resTime').value;
+            const duration = document.getElementById('resDuration').value;
+            const bookingCode = 'STAYA-' + Math.floor(1000 + Math.random() * 9000);
+
+            const modal = document.getElementById('customModal');
+            const content = document.getElementById('modalContent');
+
+            content.innerHTML = `
+                <div class="text-center space-y-4">
+                    <div class="w-14 h-14 rounded-2xl bg-caramel-500/20 text-caramel-600 flex items-center justify-center mx-auto text-2xl font-bold">
+                        🎉
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-700 text-xs font-extrabold uppercase">Kode Booking: ${bookingCode}</span>
+                    <h3 class="text-2xl font-extrabold text-espresso-950">Reservasi Ruang Fokus Berhasil!</h3>
+                    <p class="text-xs text-espresso-700">Halo <strong>${name}</strong>, tempat fokus Anda telah kami amankan:</p>
+                    <div class="bg-cream-100 p-4 rounded-2xl border border-cream-300 text-left text-xs space-y-1.5">
+                        <div class="flex justify-between"><span>Kategori:</span><strong>${category}</strong></div>
+                        <div class="flex justify-between"><span>Zona Ruang:</span><strong>${zone}</strong></div>
+                        <div class="flex justify-between"><span>Jam Kedatangan:</span><strong>${time} WIB (${duration})</strong></div>
+                        <div class="flex justify-between"><span>Lokasi:</span><strong>STAYa Politeknik Astra</strong></div>
+                    </div>
+                    <button onclick="closeModal(); document.getElementById('reservationForm').reset();" class="w-full py-3.5 rounded-xl bg-espresso-800 hover:bg-espresso-950 text-cream-50 font-extrabold text-sm">
+                        Simpan Tiket & Kembali ke Halaman
+                    </button>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function triggerDirectChannel(channelName) {
+            showToast(`Membuka saluran resmi: ${channelName}`);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('customModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    </script>
+</body>
+</html>
